@@ -1,0 +1,5 @@
+@EndUserText.label: 'so test'
+define service Ztdui_so {
+  expose zch_so_test;
+  expose zchi_so;
+}

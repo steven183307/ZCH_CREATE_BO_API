@@ -1,0 +1,77 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+      typeName:             'SalesDocument',
+      typeNamePlural:       'SalesDocument',
+      typeImageUrl: '/sap/bc/ui5_ui5/sap/sd_sov2_mans1/images/ManageSalesOrder.jpg',
+      title: {
+            type:   #STANDARD,
+            value:  'SalesDocument'
+      },
+      description: {
+            type:   #STANDARD,
+            value:  'SalesOrganization'
+       }
+
+}
+
+@UI: {
+  createHidden: true,
+  presentationVariant: [{
+    visualizations: [{type: #AS_LINEITEM}],
+    sortOrder: [
+
+      { by: 'SalesDocument', direction: #DESC } ]
+  }]
+}
+annotate view zchi_so with
+{
+  @UI.facet: [
+  {
+    id:         'SalesOrganization',
+    label:      'Order Data',
+    purpose:    #FILTER,
+    type:       #FIELDGROUP_REFERENCE,
+    importance: #HIGH,
+    targetQualifier: 'OrderDataFilter'
+  }
+  
+   ]
+
+
+
+  @Consumption.semanticObject: 'SalesDocument'
+  @UI: {
+   lineItem: [{position: 10, importance:#HIGH },
+
+              {position: 18, importance: #HIGH, type: #FOR_ACTION, dataAction: 'RemoveBillingBlock', label: 'Remove Billing Block'}]
+  ,identification: [                     {position: 90, importance: #HIGH, type: #FOR_INTENT_BASED_NAVIGATION,requiresContext: false, label: 'Create Delivery', hidden: #( UICT_CreateDlvFromSalesDoc ),
+                     semanticObject: 'OrderDataFilter', semanticObjectAction: 'createInWebGUI', semanticObjectBinding: [{ localElement: 'SalesDocument', element: 'SalesDocument' }]}],
+   selectionField: [{position: 10 }]
+ }
+  SalesDocument;
+  @Consumption.semanticObject: 'SalesDocument'
+  SalesDocumentDate;
+//  @ui.lineItem: [{      position: 0, importance:#HIGH }
+  @UI: {
+    
+    textArrangement: #TEXT_FIRST,
+    fieldGroup:[{qualifier: 'OrderDataFilter', importance: #HIGH}],
+    lineItem: [{      position: 20, importance:#HIGH }]
+  }
+  @Consumption.semanticObject: 'SalesOrganization'
+  SalesOrganization;
+  @Consumption.semanticObject: 'SalesDocument'
+  _SalesOrganizationText;
+  @Consumption.semanticObject: 'SalesDocument'
+  DistributionChannel;
+  @Consumption.semanticObject: 'SalesDocument'
+  _DistributionChannelText;
+  @Consumption.semanticObject: 'SalesDocument'
+  OrganizationDivision;
+  @Consumption.semanticObject: 'SalesDocument'
+  _DivisionText;
+  @Consumption.semanticObject: 'SalesDocument'
+  TransactionCurrency;
+
+}
